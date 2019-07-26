@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'com.velmie'
-version '0.0.2'
+version '0.0.4'
 
 repositories {
     mavenCentral()
@@ -19,9 +19,6 @@ dependencies {
     // Unit Test
     testImplementation group: 'org.jetbrains.kotlin', name: 'kotlin-test-junit', version: '1.3.31'
 }
-
-group 'com.velmie'
-version '0.0.1'
 
 compileKotlin {
     kotlinOptions.jvmTarget = "1.8"
