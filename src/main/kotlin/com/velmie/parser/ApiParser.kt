@@ -8,7 +8,7 @@ import com.velmie.parser.entity.apiResponse.interfaces.ErrorMessageInterface
 
 class ApiParser(val errorMessages: Map<String, String>, val defaultErrorMessage: String) {
 
-    fun <T> parse(response: ApiResponseInterface<T>) : ApiParserResponse<T> {
+    fun <T> parse(response: ApiResponseInterface<T>): ApiParserResponse<T> {
         return ApiParserResponse.create(response = this.getParserResponse(response))
     }
 
@@ -19,7 +19,7 @@ class ApiParser(val errorMessages: Map<String, String>, val defaultErrorMessage:
     fun <T> getParserResponse(response: ApiResponseInterface<T>): ParserResponseEntity<T> {
         return ParserResponseEntity(
             response.data,
-            errors = getErrors(response.errors)
+            errors = getErrors(response.errors ?: emptyList())
         )
     }
 

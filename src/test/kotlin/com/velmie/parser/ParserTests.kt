@@ -51,21 +51,21 @@ class ParserTests {
 
     @Test
     fun testFirstErrorMessage() {
-        assertEquals(parser.getFirstMessage(response!!.errors), Constants.Message.EMPTY_BALANCE)
-        val errors = response!!.errors.toMutableList()
-        errors.add(0, response!!.errors[2])
+        assertEquals(parser.getFirstMessage(response!!.errors!!), Constants.Message.EMPTY_BALANCE)
+        val errors = response!!.errors!!.toMutableList()
+        errors.add(0, response!!.errors!![2])
         assertEquals(parser.getFirstMessage(errors), Constants.Message.DEFAULT)
     }
 
     @Test
     fun testMessage() {
-        assertEquals(parser.getMessage(response!!.errors.last()), Constants.Message.PASSWORD_DO_NOT_MATCH)
-        assertEquals(parser.getMessage(response!!.errors[2]), Constants.Message.DEFAULT)
+        assertEquals(parser.getMessage(response!!.errors!!.last()), Constants.Message.PASSWORD_DO_NOT_MATCH)
+        assertEquals(parser.getMessage(response!!.errors!![2]), Constants.Message.DEFAULT)
     }
 
     @Test
     fun testListError() {
-        checkErrorList(response!!.errors, parser.getErrors(response!!.errors))
+        checkErrorList(response!!.errors!!, parser.getErrors(response!!.errors!!))
     }
 
     @Test
@@ -74,14 +74,14 @@ class ParserTests {
 
         assertEquals(response!!.data, parserResponse.data)
 
-        checkErrorList(response!!.errors, parserResponse.errors)
+        checkErrorList(response!!.errors!!, parserResponse.errors)
     }
 
     @Test
     fun testApiParserResponse() {
         val errorResponse = parser.parse(response!!)
         assertTrue { errorResponse is ApiParserErrorResponse }
-        checkErrorList(response!!.errors, (errorResponse as ApiParserErrorResponse).errors)
+        checkErrorList(response!!.errors!!, (errorResponse as ApiParserErrorResponse).errors)
 
         val emptyResponse = ApiResponseEntity(null, listOf())
         assertTrue { parser.parse(emptyResponse) is ApiParserEmptyResponse }
