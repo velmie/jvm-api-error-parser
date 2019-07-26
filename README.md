@@ -96,7 +96,7 @@ val parserResponse: ParserResponseEntity<UserEntity> = apiParser.getParserRespon
 val apiParserResponse: ApiParserResponse<UserEntity> = apiParser.parse(serverResponse)  
 
 when (apiParserResponse) {
-                is ApiParserSuccessResponse -> {
+                is ApiParserEmptyResponse -> {
                     //do something
                 }
                 is ApiParserErrorResponse -> {
