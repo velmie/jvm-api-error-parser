@@ -64,7 +64,7 @@ Example:
  }
 ```
 # Version
-0.0.2
+0.0.4
 
 # How it works
 The library provides ready-made interfaces for server responses to which the object passed to the parmer must correspond.
