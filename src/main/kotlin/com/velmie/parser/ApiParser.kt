@@ -6,9 +6,9 @@ import com.velmie.parser.entity.parserResponse.ParserResponseEntity
 import com.velmie.parser.entity.apiResponse.interfaces.ApiResponseInterface
 import com.velmie.parser.entity.apiResponse.interfaces.ErrorMessageInterface
 
-class ApiParser(val errorMessages: Map<String, String>, val defaultErrorMessage: String) {
+class ApiParser<E>(val errorMessages: Map<String, E>, val defaultErrorMessage: E) {
 
-    fun <T> parse(response: ApiResponseInterface<T>?): ApiParserResponse<T> {
+    fun <T> parse(response: ApiResponseInterface<T>?): ApiParserResponse<T, E> {
         return ApiParserResponse.create(response = this.getParserResponse(response))
     }
 
@@ -16,7 +16,7 @@ class ApiParser(val errorMessages: Map<String, String>, val defaultErrorMessage:
         return getParserResponse(apiResponse = gson.fromJson(json, type))
     }*/
 
-    fun <T> getParserResponse(response: ApiResponseInterface<T>?): ParserResponseEntity<T> {
+    fun <T> getParserResponse(response: ApiResponseInterface<T>?): ParserResponseEntity<T, E> {
         return if (response == null) {
             ParserResponseEntity(
                 null,
@@ -34,7 +34,7 @@ class ApiParser(val errorMessages: Map<String, String>, val defaultErrorMessage:
         return ParserResponseEntity(data, errors = getErrors(errorJson))
     }*/
 
-    fun getErrors(errors: List<ErrorMessageInterface>): List<ParserMessageEntity> {
+    fun getErrors(errors: List<ErrorMessageInterface>): List<ParserMessageEntity<E>> {
         return errors.map {
             ParserMessageEntity(
                 it.target,
@@ -54,15 +54,15 @@ class ApiParser(val errorMessages: Map<String, String>, val defaultErrorMessage:
         )
     }*/
 
-    fun getMessage(errorCode: String): String {
+    fun getMessage(errorCode: String): E {
         return errorMessages[errorCode] ?: defaultErrorMessage
     }
 
-    fun getMessage(errorMessage: ErrorMessageInterface): String {
+    fun getMessage(errorMessage: ErrorMessageInterface): E {
         return errorMessages[errorMessage.code] ?: defaultErrorMessage
     }
 
-    fun getFirstMessage(errors: List<ErrorMessageInterface>): String {
+    fun getFirstMessage(errors: List<ErrorMessageInterface>): E {
         return getMessage(errors.first())
     }
 }

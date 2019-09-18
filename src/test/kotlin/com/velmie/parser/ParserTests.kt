@@ -22,7 +22,7 @@ class ParserTests {
 
     private val gson = Gson()
 
-    private val parser: ApiParser = ApiParser(
+    private val parser: ApiParser<String> = ApiParser(
         mapOf(
             Pair(Constants.ErrorCode.INSUFFICIENT_FUNDS, Constants.Message.EMPTY_BALANCE),
             Pair(Constants.ErrorCode.INVALID_PASSWORD_CONFIRMATION, Constants.Message.PASSWORD_DO_NOT_MATCH),
@@ -119,7 +119,7 @@ class ParserTests {
          checkErrorList(apiResponse!!.errors, parser.getErrors(gson.toJson(responseStringError.errors)))
      }*/
 
-    private fun checkErrorList(errors: List<ErrorMessageInterface>, parserErrors: List<ParserMessageEntity>) {
+    private fun checkErrorList(errors: List<ErrorMessageInterface>, parserErrors: List<ParserMessageEntity<String>>) {
         assertEquals(errors[0].code, parserErrors[0].code)
         assertEquals(errors[1].code, parserErrors[1].code)
         assertEquals(errors[2].code, parserErrors[2].code)
